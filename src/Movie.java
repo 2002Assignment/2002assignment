@@ -17,7 +17,6 @@ public class Movie {
 	// constructor 
 	public Movie(String movieName, Date movieDateOn, Date movieDateOff,
 			String movieType, String rating) {
-		
 		this.movieName = movieName;
 		this.movieDateOn = movieDateOn;
 		this.movieDateOff = movieDateOff;
