@@ -41,16 +41,16 @@ public class testApp {
 		//movie1_1.assignSeat(1, 1);
 		//movie1_1.assignSeat(1, 1);
 		
-		SessionsDB sessionsDB=new SessionsDB();
+		Database database=new Database();
 		File fileName = new File ("C:/2002/2002Assignment/src/tmp.dat");
 		
-		sessionsDB.searilizeSessions(sessions, "C:/2002/2002Assignment/src/tmp.dat");
+		Database.serialize(sessions, "C:/2002/2002Assignment/src/tmp.dat");
 		
-		ArrayList<Session> newtest=(ArrayList)sessionsDB.deserializeSessions("C:/2002/2002Assignment/src/tmp.dat");
+		ArrayList<Session> newtest=(ArrayList)database.deserialize("C:/2002/2002Assignment/src/tmp.dat");
 	    
 		newtest.add(movie1_2);
-		sessionsDB.searilizeSessions(newtest, "C:/2002/2002Assignment/src/tmp.dat");
-		ArrayList<Session> newtest2=(ArrayList)sessionsDB.deserializeSessions("C:/2002/2002Assignment/src/tmp.dat");
+		Database.serialize(newtest, "C:/2002/2002Assignment/src/tmp.dat");
+		ArrayList<Session> newtest2=(ArrayList)database.deserialize("C:/2002/2002Assignment/src/tmp.dat");
 	    
 		
 		System.out.println(newtest2.isEmpty());
