@@ -1,5 +1,7 @@
+import java.io.Serializable;
 
-public class Cineplex {
+
+public class Cineplex  implements Serializable {
 	
 	private String cineplexName;
 	private Cinema[] cinema;
@@ -7,8 +9,8 @@ public class Cineplex {
 	public Cineplex() {
 		cineplexName = null;
 		Cinema[] cinema = new Cinema[3];
-		
-		// TODO Auto-generated constructor stub
+		for (int i=0;i<3;i++)
+			cinema[i]=null;
 	}
 
 	public Cineplex(String name, Cinema[] cinema){

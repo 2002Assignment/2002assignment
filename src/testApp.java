@@ -1,7 +1,10 @@
 import java.util.Calendar;
+
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
+import java.util.*;
+import java.io.*;
 
 public class testApp {
 
@@ -17,13 +20,41 @@ public class testApp {
 		Cineplex cineplex1=new Cineplex("no.1cineplex",cinema);
 		
 		Movie movie1=new Movie("I love you", movieDateStart, movieDateEnd,
-				"3D", "16G");
-		Session movie1_1=new Session(movie1, cineplex1, cinema[0],
+				"3D", "16G",150);
+		
+		ArrayList<Session> sessions=new ArrayList<Session>();
+		
+		Session movie1_0=new Session(movie1, cineplex1, cinema[0],
+				dateMovieOn);
+		sessions.add(movie1_0);
+		
+		Session movie1_1=new Session(movie1, cineplex1, cinema[1],
 				dateMovieOn);
 		
-		movie1_1.assignSeat(1, 1);
-		movie1_1.assignSeat(1, 1);
+		Session movie1_2=new Session(movie1, cineplex1, cinema[1],
+				dateMovieOn);
 		
+		sessions.add(movie1_1);
+		
+		//System.out.println(sessions.get(0).getMovie().toString());
+		
+		//movie1_1.assignSeat(1, 1);
+		//movie1_1.assignSeat(1, 1);
+		
+		SessionsDB sessionsDB=new SessionsDB();
+		File fileName = new File ("C:/2002/2002Assignment/src/tmp.dat");
+		
+		sessionsDB.searilizeSessions(sessions, "C:/2002/2002Assignment/src/tmp.dat");
+		
+		ArrayList<Session> newtest=(ArrayList)sessionsDB.deserializeSessions("C:/2002/2002Assignment/src/tmp.dat");
+	    
+		newtest.add(movie1_2);
+		sessionsDB.searilizeSessions(newtest, "C:/2002/2002Assignment/src/tmp.dat");
+		ArrayList<Session> newtest2=(ArrayList)sessionsDB.deserializeSessions("C:/2002/2002Assignment/src/tmp.dat");
+	    
+		
+		System.out.println(newtest2.isEmpty());
+		System.out.println(newtest2.get(2).getMovie().toString());
 		
 		
 

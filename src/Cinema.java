@@ -1,5 +1,7 @@
+import java.io.Serializable;
 
-public class Cinema {
+
+public class Cinema  implements Serializable {
 	private String cinemaCode;
 	private boolean isNormal;
 
