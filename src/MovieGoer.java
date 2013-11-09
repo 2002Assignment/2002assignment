@@ -1,7 +1,12 @@
+import java.util.*;
+import java.io.*;
 
-public class MovieGoer {
+public class MovieGoer implements Serializable{
 	
 	private String name;
+	
+
+
 	private String phone;
 	private String email;
 	
@@ -16,6 +21,10 @@ public class MovieGoer {
 	public String getEmail() {
 		return email;
 	}
-	
+	@Override
+	public String toString() {
+		return "MovieGoer [name=" + name + ", phone=" + phone + ", email="
+				+ email + "]";
+	}
 	
 }

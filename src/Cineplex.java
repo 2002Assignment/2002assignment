@@ -1,9 +1,13 @@
 import java.io.Serializable;
+import java.util.Arrays;
 
 
 public class Cineplex  implements Serializable {
 	
 	private String cineplexName;
+
+	
+
 	private Cinema[] cinema;
 	
 	public Cineplex() {
@@ -30,5 +34,10 @@ public class Cineplex  implements Serializable {
 	
 	public void setCineplexName(String name){
 		cineplexName = name;
+	}
+	@Override
+	public String toString() {
+		return "Cineplex [cineplexName=" + cineplexName + ", cinema="
+				+ Arrays.toString(cinema) + "]";
 	}
 }
