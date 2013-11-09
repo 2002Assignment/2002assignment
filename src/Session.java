@@ -73,6 +73,14 @@ public class Session implements Serializable {
     	
     }
     
+    public void printInvoice(MovieGoer movieGoer, double price){
+    	
+    	System.out.println("Your name: "+movieGoer.getName());
+    	System.out.println("Movie name: "+getMovie());
+    	System.out.println("Date and Time: "+dateMovieStart);
+    	System.out.println("Price: "+price);
+    	System.out.println("Movie na: "+getMovie());
+    }
     
     public Movie getMovie() {
 		return movie;

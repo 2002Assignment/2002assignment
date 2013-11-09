@@ -10,6 +10,7 @@ public class Cineplex  implements Serializable {
 
 	private Cinema[] cinema;
 	
+	
 	public Cineplex() {
 		cineplexName = null;
 		Cinema[] cinema = new Cinema[3];
@@ -28,6 +29,15 @@ public class Cineplex  implements Serializable {
 		cinema=new Cinema[num];
 	}
 	
+	
+	public Cinema[] getCinema() {
+		return cinema;
+	}
+
+	public void setCinema(Cinema[] cinema) {
+		this.cinema = cinema;
+	}
+
 	public String getCineplexName(){
 		return cineplexName;
 	}

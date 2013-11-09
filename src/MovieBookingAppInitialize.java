@@ -71,13 +71,13 @@ public class MovieBookingAppInitialize {
 		
 		// load lists from database
 		ArrayList <Cineplex> cineplexList=(ArrayList)db.deserialize("Cineplexes.dat");
-		ArrayList <Movie> MovieList=(ArrayList)db.deserialize("Movies.dat");
-	    ArrayList <Session> SessionList=(ArrayList)db.deserialize("Sessions.dat");
-	    ArrayList <Booking> BookingList=(ArrayList)db.deserialize("Bookings.dat");
+		ArrayList <Movie> movieList=(ArrayList)db.deserialize("Movies.dat");
+	    ArrayList <Session> sessionList=(ArrayList)db.deserialize("Sessions.dat");
+	    ArrayList <Booking> bookingList=(ArrayList)db.deserialize("Bookings.dat");
 	    //  ArrayList <MovieGoer> MovieGoerList=(ArrayList)db.deserialize("MovieGoers.dat");
 	    
 	    //test app
-	    Iterator<Booking> it = BookingList.iterator();
+	    Iterator<Booking> it = bookingList.iterator();
 	    while (it.hasNext()){
 	    	Booking cine=it.next();
 	    	System.out.println(cine.toString());

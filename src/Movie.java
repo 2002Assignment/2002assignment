@@ -13,6 +13,7 @@ public class Movie  implements Serializable {
 	private String movieType;
 	private String rating;
 	private int movieLastTime;
+	private String movieStatus;
 	
 	
 	// constructor 
@@ -33,6 +34,13 @@ public class Movie  implements Serializable {
 	}
 	
 	// set get method
+	public String getMovieStatus() {
+		return movieStatus;
+	}
+	public void setMovieStatus(String movieStatus) {
+		this.movieStatus = movieStatus;
+	}
+	
 	public String getMovieName() {
 		return movieName;
 	}
@@ -66,10 +74,8 @@ public class Movie  implements Serializable {
 	public int getMovieLastTime() {
 		return movieLastTime;
 	}
-	public void setRating(int movieLastTime) {
+	public void setMovieLastTime(int movieLastTime) {
 		this.movieLastTime = movieLastTime;
 	}
-	
-	
 
 }
