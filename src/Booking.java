@@ -10,8 +10,9 @@ public class Booking implements Serializable {
 	private int column;
 	private double price;
 	private Date currentDate;
+	private int ticketType;
 	//constructor
-	public Booking(double price,int seatRow, int seatColumn, Session session, MovieGoer movieGoer) {
+	public Booking(int seatRow, int seatColumn, Session session, MovieGoer movieGoer,int ticketType) {
 		Date currentDate=new Date();
 		SimpleDateFormat dateFormatter=new SimpleDateFormat("yyyymmddhhmm");
 		this.TID = session.getCinema().getCinemaCode() +dateFormatter.format(currentDate);
@@ -19,10 +20,20 @@ public class Booking implements Serializable {
 		this.movieGoer = movieGoer;
 		this.column=seatColumn;
 		this.row=seatRow;
-		this.price=price;
+		this.price=session.getSessionTicketPrice()*this.getTicketTypeDiscount();
 		this.currentDate=currentDate;
 	}
 	
+	public double getTicketTypeDiscount(){
+		double discount=1;
+		PriceSetting ps=new PriceSetting();
+		switch(ticketType){
+		case 1: discount =1; break;
+		case 2: discount=ps.getDiscountSenior();break;
+		case 3: discount=ps.getDiscountChild();break;
+		}
+		return discount;
+	}
 	public String getMovieName(){
 		return session.getMovie().getMovieName();
 	}
@@ -38,6 +49,30 @@ public class Booking implements Serializable {
 	}
 
 
+
+	public int getRow() {
+		return row;
+	}
+
+	public void setRow(int row) {
+		this.row = row;
+	}
+
+	public int getColumn() {
+		return column;
+	}
+
+	public void setColumn(int column) {
+		this.column = column;
+	}
+
+	public Session getSession() {
+		return session;
+	}
+
+	public void setSession(Session session) {
+		this.session = session;
+	}
 
 	public double getPrice() {
 		return price;
@@ -80,6 +115,11 @@ public class Booking implements Serializable {
 		System.out.println("Price:"+price);
 		System.out.println("______________________________");
 		System.out.println("Confirm to proceed payment?");
+	}
+
+	public MovieGoer getMovieGoer() {
+	
+		return movieGoer;
 	}
 
 	

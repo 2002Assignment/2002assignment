@@ -1,4 +1,6 @@
-import java.util.Scanner;
+import java.text.ParseException;
+import java.util.*;
+import java.io.*;
 
 public class Admin {
 	private String accessKey="123456";
@@ -7,9 +9,16 @@ public class Admin {
 		this.accessKey = accessKey;
 	}
 
-	public void main2(){
+	public void main2()throws ParseException{
 		int choice=0;
 		Staff staff=new Staff();
+		Database db=new Database();
+		ArrayList <Cineplex> cineplexList=(ArrayList)db.deserialize("Cineplexes.dat");
+		ArrayList <Movie> movieList=(ArrayList)db.deserialize("Movies.dat");
+	    ArrayList <Session> sessionList=(ArrayList)db.deserialize("Sessions.dat");
+	    ArrayList <Booking> bookingList=(ArrayList)db.deserialize("Bookings.dat");
+	    ArrayList<Date> holidayList=(ArrayList)db.deserialize("Holidays.dat");
+	    PriceSetting priceSetting=(PriceSetting)db.deserialize("PriceSetting.dat").get(0);
 	    if(staff.inputPwd().equals(accessKey)){
 		do{
 			System.out.println("----Welcome to Admin System----");
@@ -25,36 +34,34 @@ public class Admin {
 			switch(choice){
 			case 1:
 				staff.addMovie();
-				
 				break;
 			case 2:
-				staff.movieSession();
+				staff.addMovieSession();
 				break;
 			case 3:
-				staff.updateMoive();
+				staff.updateMovie();
 				break;
 			case 4:
-				System.out.println("Please enter the price:");
-				staff.setPrice(sc.nextDouble());
-				
+				staff.setPrice(priceSetting);
 				break;
 			case 5:
-				System.out.println("Please set public holiday:");
-				staff.setPublicHoliday();//???????????????
-				
+				staff.setHoliday(holidayList);				
 				break;
 			case 6:
 				System.out.println("__________");
 				System.out.println("1)by period;2)by movie;3)by cineplex");
 				switch(sc.nextInt()){
 				case 1:
-					staff.generateRevenueReportByPeriod();
+					RevenueReport rvrpt=new RevenueReportByPeriod(movieList, cineplexList, bookingList);
+					staff.generateRevenueReport(rvrpt);
 					break;
 				case 2:
-					staff.generateRevenueReportByMovie();
+					rvrpt=new RevenueReportByMovie(movieList, cineplexList, bookingList);
+					staff.generateRevenueReport(rvrpt);
 					break;
 				case 3:
-					staff.generateRevenueReportByCineplex();
+					rvrpt=new RevenueReportByCineplex(movieList, cineplexList, bookingList);
+					staff.generateRevenueReport(rvrpt);
 					break;
 				default:
 					System.out.println("Invalid Access");
@@ -66,7 +73,5 @@ public class Admin {
 	}
 	
 	}
-	else {
-		return 0;
-	}
+	
 }

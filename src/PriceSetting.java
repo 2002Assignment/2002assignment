@@ -1,13 +1,14 @@
 import java.util.Date;
 import java.util.Calendar;
-import java.text.SimpleDateFormat;
 import java.util.Scanner;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.io.*;
 
-public class PriceSetting {
-	public enum PriceType{
-		
-	}
+public class PriceSetting implements Serializable{
+	
 	private double priceBasic;  //digital and normal cinema adult price
+	
 	private double price3D;
 	private double priceBlockbuster;
 	private double pricePlatium;
@@ -25,6 +26,7 @@ public class PriceSetting {
 		this.discountSenior = 0.85;
 		this.discountChild = 0.8;
 	}
+	
 	public PriceSetting(double priceBasic, double price3d,
 			double priceBlockbuster, double pricePlatium, double priceHoliday,
 			double discountSenior, double discountChild) {
@@ -94,6 +96,45 @@ public class PriceSetting {
 		System.out.println("Set the discount for child member: ");
 		Scanner sc= new Scanner(System.in);
 		this.discountChild = sc.nextDouble();
+	}
+	@Override
+	public String toString() {
+		return "PriceSetting [priceBasic=" + priceBasic + ", price3D="
+				+ price3D + ", priceBlockbuster=" + priceBlockbuster
+				+ ", pricePlatium=" + pricePlatium + ", priceHoliday="
+				+ priceHoliday + ", discountSenior=" + discountSenior
+				+ ", discountChild=" + discountChild + "]";
+	}
+	
+	public void setAllPrice(){
+		int choice;
+		do {
+		System.out.println("The current price setting : ");
+		System.out.println(this.toString());
+		System.out.println("->>Price Setting Menu:  Note besides basic price, others are incremental price based on basic price");
+    	System.out.println("1. basic price");
+    	System.out.println("2. blockBuster+");
+    	System.out.println("3. platium+");
+    	System.out.println("4. holiday+");
+    	System.out.println("5. senior discount(eg : 0.8)");
+    	System.out.println("5. child discount(eg : 0.8)");
+    	System.out.println("6. EXIT");
+		Scanner sc=new Scanner(System.in);
+		choice=sc.nextInt();
+		switch (choice){
+		case 1:this.setPriceBasic();break;
+		case 2:this.setPriceBlockbuster();break;
+		case 3:this.setPricePlatium();break;
+		case 4:this.setPriceHoliday();break;
+		case 5:this.setDiscountSenior();break;
+		case 6:this.setDiscountChild();break;
+		default:System.out.println("End of setting price");
+		}
+		}while (choice<6);
+		
+		
+		
+		
 	}
 	
 }

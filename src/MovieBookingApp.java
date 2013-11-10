@@ -22,12 +22,11 @@ public class MovieBookingApp {
 		boolean b=true, b1=true, b2=true, b3=true, b4=true;
 		String cusName, phone, email;
 		double price;
-		
 		Scanner sc = new Scanner(System.in);
 		
 		MovieGoer movieGoer = null;
 		Booking booking;
-	
+	    int ticketType;
 		
 		
 		System.out.println("Choose interface: 1. Customer  2. Administrator");
@@ -47,12 +46,17 @@ public class MovieBookingApp {
 	    	switch(displayChoice) {
 	    	case 1: printMovieMenu();
     	    movieChoice = sc.nextInt();
-    	   
-    	    while (movieChoice != 4){
+    	    if(movieChoice == 4){
+    	    	b = false;
+    	    	continue;
+    	    }
+    	    while (b){
     	        ArrayList newList = printMoviePeriod(movieChoice, movieList);
     	        movieC = sc.nextInt();
-    	        if (movieC == 0)
-    	        	b1 = false;
+    	        if (movieC == 0){
+    	        	b = false;
+    	        	continue;
+    	        }
     	        while (b1){
     	        	//printIndividualMovie(movieC-1, newList);
     	        	
@@ -71,7 +75,7 @@ public class MovieBookingApp {
         	        	//printSession(movie[movieC-1], cineplex[cineChoice-1]);
         	        timeChoice = sc.nextInt();
         	       	if (timeChoice == 0) {
-        	       		b2 = false;
+        	       		b1 = false;
         	       		continue;
         	       	}
         	       		
@@ -93,13 +97,16 @@ public class MovieBookingApp {
        	        		while(b3){
         	        			
        	        			printTicketType();
-       	        			ticketChoice = sc.nextInt();
+       	        			ticketType = sc.nextInt();
         	        			
-       	        			if (!confirm()){
-        	        				
-           	        			continue;
+       	        			if (confirm()){
+        	        			b3=false;	
+        	        			break;
            	        		}
-        	        			
+       	        			else{
+       	        				b2=false;
+       	        				break;
+       	        			}
         	        			
         	        	}
         	        		
@@ -112,9 +119,9 @@ public class MovieBookingApp {
         	       		email = sc.next();
         	        		
         	       		movieGoer = new MovieGoer(cusName, phone, email);
-        	        	booking = new Booking(price ,row, col, ((Session)newList1.get(timeChoice-1)), movieGoer);
+        	        	booking = new Booking(row, col, ((Session)newList1.get(timeChoice-1)), movieGoer,ticketChoice);
         	       		
-        	       		price = calPrice(ticketChoice, (Session)newList1.get(timeChoice-1));
+        	       		//price = calPrice(ticketChoice, (Session)newList1.get(timeChoice-1));
         	       		booking.printInvoice();
         	        		
         	     
@@ -140,17 +147,21 @@ public class MovieBookingApp {
 	    		break;
 	    	case 2:printCinemaMenu(cineplexList);
     	        cineChoice = sc.nextInt();
+    	        if(cineChoice == 0){
+    	        	b = false;
+    	        	continue;
+    	        }
     	        
-    	        while (cineChoice != 0){
+    	        while (b){
         	       ArrayList newList = printMovieCine(sessionList, cineplexList.get(cineChoice-1));
         	       
             	   timeChoice = sc.nextInt();
             	   if (timeChoice == 0) {
-            	        b2 = false;
+            	        b = false;
             	       	continue;
             	       }
             	        		
-            	   while (b2) {
+            	   while (b1) {
             		   
            	       		((Session)newList.get(timeChoice-1)).printSessionLayout();
            	       		System.out.println("Choose the row: ");
@@ -166,36 +177,42 @@ public class MovieBookingApp {
            	        		
           	        		((Session)newList.get(timeChoice-1)).assignSeat(row, col);
            	        		
-          	        		while(b3){
+          	        		while(b2){
            	        			
           	        			printTicketType();
           	        			ticketChoice = sc.nextInt();
            	        			
           	        			if (!confirm()){
-           	        				
-              	        			continue;
-              	        		}
+            	        			b2=false;	
+            	        			break;
+               	        		}
+           	        			else{
+           	        				b1=false;
+           	        				break;
+           	        			}
            	        			
            	        			
            	        	}
            	        		
            	        		//get customer particulars..need another method?
-           	        	System.out.println("Enter your name");
-           	       		cusName = sc.next();
-           	       		System.out.println("Enter your phone");
-           	       		phone = sc.next();
-           	      		System.out.println("Enter your email");
-           	       		email = sc.next();
+          	        	sc.nextLine();
+           	        	System.out.println("Enter your name:");
+           	       		cusName = sc.nextLine();
+           	       		System.out.println("Enter your phone:");
+           	       		phone = sc.nextLine();
+           	      		System.out.println("Enter your email:");
+           	       		email = sc.nextLine();
            	        		
            	       		movieGoer = new MovieGoer(cusName, phone, email);
-           	        	booking = new Booking(price,row, col, ((Session)newList.get(timeChoice-1)), movieGoer);
+           	        	booking = new Booking(row, col, ((Session)newList.get(timeChoice-1)),movieGoer,ticketChoice);
            	       		
-           	       		price = calPrice(ticketChoice, (Session)newList.get(timeChoice-1));
+           	       		//price = calPrice(ticketChoice, (Session)newList.get(timeChoice-1));
            	       		booking.printInvoice();
            	        		
            	     
            	       		System.out.println("Proceed to paying...");
            	       		if (!confirm()){
+           	       			b1 = true;
            	       			continue;
            	       		}
            	        		
@@ -216,20 +233,25 @@ public class MovieBookingApp {
     	        break;
     	        
 	    	case 3:
-	    		System.out.println("Platinum menu:");
+	    		System.out.println("Platium menu:");
 	    		printCinemaMenu(cineplexList);
 	    		cineChoice = sc.nextInt();
+	    		
+	    		if(cineChoice == 0){
+	    			b = false;
+	    			continue;
+	    		}
 	        
-	            while (cineChoice != 0){
-	            	ArrayList newList = printMoviePlatinum(sessionList, cineplexList.get(cineChoice));
+	            while (b){
+	            	ArrayList newList = printMoviePlatium(sessionList, cineplexList.get(cineChoice));
     	        
 	            	timeChoice = sc.nextInt();
 	            	if (timeChoice == 0) {
-	            		b2 = false;
+	            		b = false;
 	            		continue;
 	            	}
             	        		
-	            	while (b2) {
+	            	while (b1) {
             		   
            	       		((Session)newList.get(timeChoice-1)).printSessionLayout();
            	       		System.out.println("Choose the row: ");
@@ -245,7 +267,7 @@ public class MovieBookingApp {
            	        		
            	       		((Session)newList.get(timeChoice-1)).assignSeat(row, col);
            	        		
-           	       		while(b3){
+           	       		while(b2){
            	        			
            	       			printTicketType();
            	       			ticketChoice = sc.nextInt();
@@ -267,9 +289,9 @@ public class MovieBookingApp {
            	       		email = sc.next();
            	        		
            	       		movieGoer = new MovieGoer(cusName, phone, email);
-           	       		booking = new Booking(price,row, col, ((Session)newList.get(timeChoice-1)), movieGoer);
+           	       		booking = new Booking(row, col, ((Session)newList.get(timeChoice-1)), movieGoer,ticketChoice);
            	       		
-           	       		price = calPrice(ticketChoice, (Session)newList.get(timeChoice-1));
+           	       		//price = calPrice(ticketChoice, (Session)newList.get(timeChoice-1));
            	       		booking.printInvoice();
            	        		
            	     
@@ -283,12 +305,7 @@ public class MovieBookingApp {
            	       		booking.printTicket();	        		
 	            	}
         	        
-        	        	
-        	       
-        	       
-    	        
-    	        
-    	      
+        	      
     	        
     	    }
 	        break;
@@ -329,7 +346,7 @@ public class MovieBookingApp {
 
 		System.out.println("->>Display Menu:");
     	System.out.println("1. Movies");
-    	System.out.println("2. Cinemas");
+    	System.out.println("2. Cineplexes");
     	System.out.println("3. Platimum movies");
     	System.out.println("4. My account");
     	System.out.println("5. Exit");
@@ -339,20 +356,21 @@ public class MovieBookingApp {
 		System.out.println("->>Movies:");
 	    System.out.println("1. Now showing");
 	    System.out.println("2. Coming soon");
-	    System.out.println("3. Sneak preview");
+	    System.out.println("3. Preview");
 	    System.out.println("4. Exit");
 	}
 	
 	public static ArrayList printMoviePeriod(int num, ArrayList<Movie> movieList){
 	    
 		int i = 1;
-		ArrayList newlist = null ;
-		
+		ArrayList<Movie> newlist =new ArrayList<Movie>() ;
+		System.out.println(num+"+"+movieList.get(0).toString());
 	    switch(num){
 	    case 1: //print now showing
 	    
 	    	for (Movie m : movieList){
-	    		if (m.getMovieStatus() == "Now Showing"){
+	    		System.out.println(m.getMovieStatus());
+	    		if (m.getMovieStatus().equals("NowShowing")){
 	    			
 	    	        System.out.println(i + ": " + m.getMovieName() +" " + m.getMovieType() +" " + m.getMovieLastTime() 
 	    	        		+" " + m.getRating());
@@ -372,7 +390,7 @@ public class MovieBookingApp {
 	    case 2: //print coming soon
 
 	    	for (Movie m : movieList){
-	    		if (m.getMovieStatus() == "Coming soon"){
+	    		if (m.getMovieStatus().equals("ComingSoon")){
 	    	        System.out.println(i + ": " + m.getMovieName() +" " + m.getMovieType() +" " + m.getMovieLastTime()
 	    	        		+" " + m.getRating());
 	    	        newlist.add(m);
@@ -385,14 +403,15 @@ public class MovieBookingApp {
 	    case 3: //print sneak preview   ????a new type??
 	    	
 	    	for (Movie m : movieList){
-	    		if (m.getMovieStatus() == "Sneaker Preview")
+	    		if (m.getMovieStatus().equals("Preview")){
 	    	        System.out.println(i + ": " + m.getMovieName()+" " + m.getMovieType()+" "  + m.getMovieLastTime()
 	    	        		+" " + m.getRating());
 	    			newlist.add(m);
 	    			i++;
-	    	    }
+	    		}
+	    	}
 	    	break;
-	        }
+	    }
 	    
 	    System.out.println("0: Go back");
 	    return newlist;
@@ -401,11 +420,11 @@ public class MovieBookingApp {
 	
     public static ArrayList printMovieCine(ArrayList<Session> sessionList, Cineplex cineplex){
 	    
-    	ArrayList newlist = null;
+    	ArrayList<Session> newlist = new ArrayList<Session>();
     	int j = 1;
 	    	
 	    for(Session s : sessionList){
-			if (s.getCineplex().getCineplexName() == cineplex.getCineplexName()){
+			if (s.getCineplex().getCineplexName().equals(cineplex.getCineplexName())){
 				System.out.println( j + ": " + s.getMovie().getMovieName() +" " + s.getMovie().getMovieType()+
 						" "  + s.getMovie().getMovieLastTime()+" " + s.getMovie().getRating());
 				j++;
@@ -417,9 +436,9 @@ public class MovieBookingApp {
 	    return newlist;
 	}
     
-    public static ArrayList printMoviePlatinum(ArrayList<Session> sessionList, Cineplex cineplex){
+    public static ArrayList printMoviePlatium(ArrayList<Session> sessionList, Cineplex cineplex){
 	    
-    	ArrayList newlist = null;
+    	ArrayList<Session> newlist=new ArrayList<Session>();
     	int j = 1;
 	    	
 	    for(Session s : sessionList){
@@ -442,7 +461,7 @@ public class MovieBookingApp {
     	System.out.println("->>Ticket Type:");
         System.out.println("1. Normal");
         System.out.println("2. Elder");
-        System.out.println("3. Student");
+        System.out.println("3. Child");
         System.out.println("4. Exit");
 	}
 	
@@ -459,8 +478,7 @@ public class MovieBookingApp {
 	public static ArrayList printCineplex(Movie movie, ArrayList<Session> session){
 		
 		//how to find the cineplexes that show the movie???????
-		
-		ArrayList newlist = null;
+		ArrayList<Session> newlist=new ArrayList<Session>();
 		Cineplex [] cineplexArray = new Cineplex[3];
 		
 		int i = 0, j = 1;
@@ -499,7 +517,7 @@ public class MovieBookingApp {
 		return (sc.nextInt()==1)? false: true;
 	}
 	
-	public static double calPrice(int ticketChoice, Session session){
+	/*public static double calPrice(int ticketChoice, Session session){
 		
 		PriceSetting priceSetting = new PriceSetting();
 		double price = priceSetting.getPriceBasic();
@@ -515,15 +533,15 @@ public class MovieBookingApp {
 		}
 		
 		if(isNormal == 0)
-			price += priceSetting.getPricePlatinum();
+			price += priceSetting.getPricePlatium();
 		
 		
 		switch(ticketChoice){
-		case 2: price *= priceSetting.getPriceSenior();
-		case 3: price *= priceSetting.getPriceStudent();
+		case 2: price *= priceSetting.getDiscountSenior();
+		case 3: price *= priceSetting.getDiscountChild();
 		}
 		return price;
-	}
+	} */
 
 	public static void printHistory(MovieGoer movieGoer, ArrayList<Booking> bookingList){
 		
@@ -531,9 +549,9 @@ public class MovieBookingApp {
     	
 	    for(Booking b : bookingList){
 			if(b.getMovieGoer() == movieGoer)
-				System.out.println( j + ": " + b.getMovieGoer().getCusName() +" " + b.getSession().getMovie().getMovieNme()+
+				System.out.println( j + ": " + b.getMovieGoer().getName() +" " + b.getSession().getMovie().getMovieName()+
 						" "  + b.getSession().getMovie().getMovieDateOn()+" " + b.getSession().getCineplex().getCineplexName()+
-						" "  + b.getRow() + " " + b.getCol()+" "  + b.getSession().getPrice());
+						" "  + b.getRow() + " " + b.getColumn()+" "  + b.getSession().getSessionTicketPrice());
 			
 			
     	}

@@ -10,6 +10,7 @@ import java.util.GregorianCalendar;
 
 
 public class MovieSetting {
+	
 	Database db=new Database();
 	ArrayList <Cineplex> cineplexList=(ArrayList)db.deserialize("Cineplexes.dat");
 	ArrayList <Movie> movieList=(ArrayList)db.deserialize("Movies.dat");
@@ -21,26 +22,22 @@ public class MovieSetting {
 	private String movieType;
 	private String rating;
 	private int movieLastTime;
-	
-	
+	private String movieStatus;
 	private int upC;
-	
 	private String name;
 	
+	
 	//constructor
-	public MovieSetting(String movieName, Date movieDateOn, 
-			String movieType, String rating, int movieLastTime, Movie movie, 
-			int upC, String name, Database db) {
-		super();
+	public MovieSetting() {
 		this.movieName = null;
 		this.movieDateOn = null;
 		this.movieType = null;
 		this.rating = null;
 		this.movieLastTime = 0;
+		this.movieStatus =null;
 		this.upC = 0;
 		this.name = null;
-		this.db = null;
-		
+		this.db =new Database();
 	}
 
 	
@@ -60,9 +57,11 @@ public class MovieSetting {
 	    rating = sc.next();
 	    System.out.println("Enter movie last time:");
 	    movieLastTime = sc.nextInt();
-	    
-		Movie movie = new Movie(movieName, movieDateOn, movieDateOff, 
-				movieType, rating, movieLastTime);
+	    System.out.println("Enter movie status: ");
+	    movieStatus = sc.next();
+		
+		Movie movie = new Movie(movieName, movieDateOn,movieType, rating,
+				movieLastTime, movieStatus);
 		movieList.add(movie);
 		db.serialize(movieList, "Movies.dat");
 	}
@@ -82,8 +81,8 @@ public class MovieSetting {
 	    name = sc.next();
 	   
 	    Iterator<Movie> it = movieList.iterator();
-	    Movie mv = new Movie(movieName, movieDateOn, movieDateOff, 
-				movieType, rating, movieLastTime);
+		Movie mv = new Movie(movieName, movieDateOn,movieType, rating,
+				movieLastTime, movieStatus);
 	    
 	    while (it.hasNext()){
 	    	mv=it.next();

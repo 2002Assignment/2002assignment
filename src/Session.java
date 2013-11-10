@@ -70,6 +70,7 @@ public class Session implements Serializable {
 		
 	}
     public void printSessionLayout(){
+    	//..........
     	
     }
     
@@ -126,6 +127,25 @@ public class Session implements Serializable {
 
 	public void setdateMovieStart(Date dateMovieStart) {
 		this.dateMovieStart = dateMovieStart;
+	}
+	public double getSessionTicketPrice(){
+		
+		PriceSetting priceSetting = new PriceSetting();
+		double price = priceSetting.getPriceBasic();
+		
+		String movieType = movie.getMovieType();
+		int isNormal = cinema.isCinemaNormal()? 1:0;
+		
+		switch(movieType){
+		case "3D": price += priceSetting.getPrice3D();
+			break;
+		case "Blockbuster": price += priceSetting.getPriceBlockbuster();
+			break;
+		}
+		
+		if(isNormal == 0)
+			price += priceSetting.getPricePlatium();
+		return price;
 	}
 
 }

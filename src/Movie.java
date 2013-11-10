@@ -9,7 +9,7 @@ import java.util.GregorianCalendar;
 public class Movie  implements Serializable {
 	private String movieName;
 	private Date movieDateOn;
-	private Date movieDateOff;
+	//private Date movieDateOff;
 	private String movieType;
 	private String rating;
 	private int movieLastTime;
@@ -17,20 +17,21 @@ public class Movie  implements Serializable {
 	
 	
 	// constructor 
-	public Movie(String movieName, Date movieDateOn, Date movieDateOff,
-			String movieType, String rating,int movieLastTime) {
+	public Movie(String movieName, Date movieDateOn,
+			String movieType, String rating,int movieLastTime,String movieStatus) {
 		this.movieName = movieName;
 		this.movieDateOn = movieDateOn;
-		this.movieDateOff = movieDateOff;
+		//this.movieDateOff = movieDateOff;
 		this.movieType = movieType;
 		this.rating = rating;
 		this.movieLastTime=movieLastTime;
+		this.movieStatus=movieStatus;
 	}
 	//to string
 	public String toString() {
 		return "Movie [movieName=" + movieName + ", movieDateOn=" + movieDateOn
-				+ ", movieDateOff=" + movieDateOff + ", MovieType=" + movieType
-				+ ", Rating=" + rating + ",movie last time "+ movieLastTime+"]";
+				+ ", MovieType=" + movieType
+				+ ", Rating=" + rating + ",movie last time "+ movieLastTime+"MovieStatus="+movieStatus+"]";
 	}
 	
 	// set get method
@@ -53,12 +54,7 @@ public class Movie  implements Serializable {
 	public void setMovieDateOn(Date movieDateOn) {
 		this.movieDateOn = movieDateOn;
 	}
-	public Date getMovieDateOff() {
-		return movieDateOff;
-	}
-	public void setMovieDateOff(Date movieDateOff) {
-		this.movieDateOff = movieDateOff;
-	}
+	
 	public String getMovieType() {
 		return movieType;
 	}

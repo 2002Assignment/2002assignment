@@ -17,9 +17,7 @@ public class SessionSetting {
 	private Date dateMovieStart;
 	
 	
-	public SessionSetting(Database db, Movie movie, Cineplex cineplex,
-			Cinema cinema, Date dateMovieStart) {
-		super();
+	public SessionSetting() {
 		this.db = null;
 		this.movie = null;
 		this.cineplex = null;

@@ -24,22 +24,31 @@ public class Staff{
 		    e.printStackTrace(); 
 		}
 		Database db=new Database();
-		db.serialize(holidays, "Holiday.dat");
+		db.serialize(holidays, "Holiday.dat");   //write back
 	}
-	public void setPrice(double basicPrice){
-		PriceSetting priceSetting=new PriceSetting();
-		System.out.println("The current price setting : ");
-		System.out.println("Basic price: "+ priceSetting.getPriceBasic());
-		
+	public void setPrice(PriceSetting priceSetting){
+	    Database db=new Database();
+		priceSetting.setAllPrice();
+		ArrayList<PriceSetting> newlist=new ArrayList<PriceSetting>();
+		newlist.add(priceSetting);
+		db.serialize(newlist, "PriceSetting.dat"); //write back
 	}
-	public void setMovie(){
-		
+	public void addMovie()throws ParseException{
+		MovieSetting movieSetting=new MovieSetting();
+		movieSetting.addMovie();
 	}
-	public void updateMovie(){
-		
+	public void updateMovie()throws ParseException{
+		MovieSetting movieSetting=new MovieSetting();
+		movieSetting.updateMovie();
 	}
 	public void generateRevenueReport(RevenueReport RV){
-		
+		RV.calculateRevenue();
+		RV.printReport();
 	}
 
+	public void addMovieSession()throws ParseException{
+		SessionSetting sessionSetting=new SessionSetting();
+		sessionSetting.addSession();
+		
+	}
 }

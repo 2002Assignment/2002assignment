@@ -6,7 +6,7 @@ public class RevenueReportByPeriod extends RevenueReport{
 	RevenueReportByPeriod(ArrayList<Movie> m, ArrayList<Cineplex> c,
 			ArrayList<Booking> b) {
 		super(m, c, b);
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	private SimpleDateFormat dateFormatter=new SimpleDateFormat("yyyymmddhhmm");
