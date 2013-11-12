@@ -1,10 +1,7 @@
 import java.util.*;
 
 public class RevenueReportByCineplex extends RevenueReport{
-	
-	private HashMap<String, HashMap> revenueMap = new HashMap<String, HashMap>();
-	private HashMap<String, Double> revenueCineplexMap = new HashMap<String, Double>();
-	private HashMap<String, Double> totalRevenueMap = new HashMap<String, Double>();
+
 	private double revenue;
 	private double totalRevenue;
 	
@@ -14,39 +11,31 @@ public class RevenueReportByCineplex extends RevenueReport{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void calculateRevenue(){
+	@SuppressWarnings("deprecation")
+	public void printRevenueReport(){
+		Date today = new Date();
+		System.out.printf("=======%s Revenue Report By Cineplex======\n", today.getYear());
 		
 		for(Cineplex c : cineplexList){
-			revenueCineplexMap.clear();
+			System.out.printf("------Cineplex: %-15s------\n", c.getCineplexName());
+			totalRevenue = 0;
 			for (Movie m : movieList){
+				System.out.printf("%-20s : ", m.getMovieName());
+				revenue =0;
+				
 				for (Booking b : bookingList)
-					if(b.getMovieName() == m.getMovieName() & b.getCineplexName() == c.getCineplexName()){
+					if(b.getMovieName().equals(m.getMovieName()) &(b.getCurrentDate().getYear() == today.getYear())& b.getCineplexName().equals(c.getCineplexName())){
 								revenue+=b.getPrice();
 								}
-				revenueCineplexMap.put(c.getCineplexName(),revenue);
+				totalRevenue+=revenue;
+				System.out.printf("%8.1f\n", revenue);
+				
 			}
-				revenueMap.put(c.getCineplexName(), revenueCineplexMap);
+				System.out.printf("%-20s : %8.1f\n", "TOTAL REVENUE", totalRevenue);
+				
 			}
-
-			for(String key : revenueMap.keySet()){
-				totalRevenue = 0;
-				for(double r : revenueCineplexMap.values())
-					totalRevenue += r;
-				totalRevenueMap.put(key, totalRevenue);
-		}
+		System.out.println();
 	}
-	
 
-		public void printReport(){
-			for(String key: revenueMap.keySet()){
-				System.out.format("%-30s", key);
-				for(String key1: revenueCineplexMap.keySet()){
-					System.out.format("%-10d", revenueCineplexMap.get(key1));
-					}
-				System.out.format("%-10d", totalRevenueMap.get(key));
-				System.out.println();
-				}
-			
-			}
 
 }

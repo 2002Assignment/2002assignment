@@ -11,7 +11,7 @@ public class PriceSetting implements Serializable{
 	
 	private double price3D;
 	//private double priceBlockbuster;
-	private double pricePlatinum;
+	private double pricePlatium;
 	private double priceHoliday;
 	private double discountSenior;
 	private double discountChild;
@@ -20,19 +20,19 @@ public class PriceSetting implements Serializable{
 	public PriceSetting(){
 		this.priceBasic = 10;
 		this.price3D = 3;
-		this.pricePlatinum = 5;
+		this.pricePlatium = 5;
 		this.priceHoliday = 2;
 		this.discountSenior = 0.85;
 		this.discountChild = 0.8;
 	}
 	
 	public PriceSetting(double priceBasic, double price3d,
-			double priceBlockbuster, double pricePlatinum, double priceHoliday,
+			double priceBlockbuster, double pricePlatium, double priceHoliday,
 			double discountSenior, double discountChild) {
 		
 		this.priceBasic = priceBasic;
 		this.price3D = price3d;
-		this.pricePlatinum = pricePlatinum;
+		this.pricePlatium = pricePlatium;
 		this.priceHoliday = priceHoliday;
 		this.discountSenior = discountSenior;
 		this.discountChild = discountChild;
@@ -42,7 +42,7 @@ public class PriceSetting implements Serializable{
 		return priceBasic;
 	}
 	public void setPriceBasic() {
-		System.out.println("#Set the basic price for adult who watch digital movie in normal cinema: ");
+		System.out.println("Set the basic price for adult who watch digital movie in normal cinema: ");
 		Scanner sc= new Scanner(System.in);
 		this.priceBasic = sc.nextDouble();
 	}
@@ -51,23 +51,23 @@ public class PriceSetting implements Serializable{
 	}
 	public void setPrice3D() {
 		double priceBasic;
-		System.out.println("#Set the price difference btween 3D and 2D /digital movie: ");
+		System.out.println("Set the price difference btween 3D and 2D /digital movie: ");
 		Scanner sc= new Scanner(System.in);
 		this.price3D = sc.nextDouble();
 	}
-	public double getPricePlatinum() {
-		return pricePlatinum;
+	public double getPricePlatium() {
+		return pricePlatium;
 	}
-	public void setPricePlatinum() {
-		System.out.println("#Set the price difference btween platinum and normal cinema: ");
+	public void setPricePlatium() {
+		System.out.println("Set the price difference btween platium and normal cinema: ");
 		Scanner sc= new Scanner(System.in);
-		this.pricePlatinum = sc.nextDouble();
+		this.pricePlatium = sc.nextDouble();
 	}
 	public double getPriceHoliday() {
 		return priceHoliday;
 	}
 	public void setPriceHoliday() {
-		System.out.println("#Set the price difference btween Holiday and normal day: ");
+		System.out.println("Set the price difference btween Holiday and normal day: ");
 		Scanner sc= new Scanner(System.in);
 		this.priceHoliday = sc.nextDouble();
 	}
@@ -75,7 +75,7 @@ public class PriceSetting implements Serializable{
 		return discountSenior;
 	}
 	public void setDiscountSenior() {
-		System.out.println("#Set the discount for senior member: ");
+		System.out.println("Set the discount for senior member: ");
 		Scanner sc= new Scanner(System.in);
 		this.discountSenior = sc.nextDouble();
 	}
@@ -83,7 +83,7 @@ public class PriceSetting implements Serializable{
 		return discountChild;
 	}
 	public void setDiscountChild() {
-		System.out.println("#Set the discount for child member: ");
+		System.out.println("Set the discount for child member: ");
 		Scanner sc= new Scanner(System.in);
 		this.discountChild = sc.nextDouble();
 	}
@@ -91,44 +91,34 @@ public class PriceSetting implements Serializable{
 	public String toString() {
 		return "PriceSetting [priceBasic=" + priceBasic + ", price3D="
 				+ price3D
-				+ ", pricePlatinum=" + pricePlatinum + ", priceHoliday="
+				+ ", pricePlatium=" + pricePlatium + ", priceHoliday="
 				+ priceHoliday + ", discountSenior=" + discountSenior
 				+ ", discountChild=" + discountChild + "]";
 	}
 	
-	public void printPriceSetting(){
-		System.out.println("================Price Settings===============");
-		System.out.println("1. Basic price          "+priceBasic);
-    	System.out.println("2. Platinum+(basic price)"+pricePlatinum);
-    	System.out.println("3. Holiday+(basic price)"+priceHoliday);
-    	System.out.println("4. Senior discount      "+discountSenior);
-    	System.out.println("5. Child discount       "+discountChild);
-	}
 	public PriceSetting setAllPrice(){
 		int choice;
 		do {
-		this.printPriceSetting();
-		System.out.println("=====================Price Settings====================");
+		System.out.println("The current price setting : ");
+		System.out.println(this.toString());
 		System.out.println("->>Price Setting Menu:  Note besides basic price, others are incremental price based on basic price");
-    	System.out.println("1. Basic price                      "+priceBasic);
-    	System.out.println("2. 3D price+(basic price)           "+price3D);
-    	System.out.println("3. Platinum +(basic price)          "+pricePlatinum);
-    	System.out.println("4. Holiday +(basic price)           "+priceHoliday);
-    	System.out.println("5. Senior discount(eg : 0.8=20% OFF)"+discountSenior);
-    	System.out.println("6. Child discount(eg : 0.8=20% OFF) "+discountChild);
-    	System.out.println("7. EXIT");
+    	System.out.println("1. basic price");
+    	System.out.println("2. platium+(basic price)");
+    	System.out.println("3. holiday+(basic price)");
+    	System.out.println("4. senior discount(eg : 0.8=20% OFF)");
+    	System.out.println("5. child discount(eg : 0.8=20% OFF)");
+    	System.out.println("6. EXIT");
 		Scanner sc=new Scanner(System.in);
 		choice=sc.nextInt();
 		switch (choice){
 		case 1:this.setPriceBasic();break;
-		case 2:this.setPrice3D();break;
-		case 3:this.setPricePlatinum();break;
-		case 4:this.setPriceHoliday();break;
-		case 5:this.setDiscountSenior();break;
-		case 6:this.setDiscountChild();break;
-		default:System.out.println("===============End of setting price=================");
+		case 2:this.setPricePlatium();break;
+		case 3:this.setPriceHoliday();break;
+		case 4:this.setDiscountSenior();break;
+		case 5:this.setDiscountChild();break;
+		default:System.out.println("End of setting price");
 		}
-		}while (choice<7);
+		}while (choice<6);
 		return this;
 		
 	}

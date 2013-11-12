@@ -1,6 +1,5 @@
 
 import java.util.*;
-import java.io.*;
 import java.text.*;
 
 public class Staff{
@@ -13,8 +12,8 @@ public class Staff{
 	}
 	
 	public void setHoliday(ArrayList<Date> holidays){  //pass the original list of holidays
-		//ArrayList <Date> holidays=new ArrayList<Date>();
-		//System.out.println(holidays.get(holidays.size()-1).toString());
+		System.out.println("===================Add Holiday================");
+		System.out.println("===============Holidays in Database===========");
 		for (Date d: holidays){
 			SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 		    System.out.println(dateFormatter.format(d));
@@ -29,23 +28,28 @@ public class Staff{
 		} catch (ParseException e) {   
 		    e.printStackTrace(); 
 		}
-		Database db=new Database();
-		db.serialize(holidays, "Holidays.dat");   //write back
-		ArrayList<Date> newlist=(ArrayList)db.deserialize("Holidays.dat");
+		
+		Database.serialize(holidays, "Holidays.dat");   //write back
+		System.out.println("Updated successfully!");
+		System.out.println("===============Holidays in Database==============");
+		ArrayList<Date> newlist=(ArrayList)Database.deserialize("Holidays.dat");
 		for (Date d: newlist){
 			SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 		    System.out.println(dateFormatter.format(d));
 		}
 		
 	}
-	public void setPrice(PriceSetting priceSetting){
-	    Database db=new Database();
+	
+	public void setPrice(PriceSetting priceSetting){ 
+		
+	    
 		priceSetting.setAllPrice();
-		db.serialize2(priceSetting, "PriceSetting.dat"); //write back
+		Database.serialize2(priceSetting, "PriceSetting.dat"); //write back
 	}
 	public void addMovie(ArrayList<Movie> movieList)throws ParseException{
 		MovieSetting movieSetting=new MovieSetting();
-        movieSetting.printMovie();
+		//movieList.toString();
+		movieSetting.printMovie();
 		movieSetting.addMovie();
 	}
 	public void updateMovie()throws ParseException{
@@ -54,13 +58,29 @@ public class Staff{
 		movieSetting.updateMovie();
 	}
 	public void generateRevenueReport(RevenueReport RV){
-		RV.calculateRevenue();
-		RV.printReport();
+		RV.printRevenueReport();
+
+	}
+	public void deleteMovie(){
+		MovieSetting movieSetting=new MovieSetting();
+		movieSetting.printMovie();
+		movieSetting.deleteMovie();
 	}
 
 	public void addMovieSession()throws ParseException{
 		SessionSetting sessionSetting=new SessionSetting();
+	    sessionSetting.printSession();
 		sessionSetting.addSession();
 		
+	}
+	public void updateMovieSession() throws Exception{
+		SessionSetting sessionSetting=new SessionSetting();
+		sessionSetting.printSession();
+		sessionSetting.updateSession();
+	}
+	public void deleteMovieSession(){
+		SessionSetting sessionSetting=new SessionSetting();
+		sessionSetting.printSession();
+		sessionSetting.deleteSession();
 	}
 }

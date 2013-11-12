@@ -1,6 +1,7 @@
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+
 public class RevenueReportByPeriod extends RevenueReport{
 
 	RevenueReportByPeriod(ArrayList<Movie> m, ArrayList<Cineplex> c,
@@ -9,78 +10,96 @@ public class RevenueReportByPeriod extends RevenueReport{
 		
 	}
 
-	private SimpleDateFormat dateFormatter=new SimpleDateFormat("yyyymmddhhmm");
-	private HashMap<String, Double> revenueDayMap = new HashMap<String, Double>();
-	private HashMap<Date, HashMap> revenueMap = new HashMap<Date, HashMap>();
-	private HashMap<Date, Double> totalRevenueMap = new HashMap<Date, Double>();
+	private SimpleDateFormat dateFormatter=new SimpleDateFormat("yyyyMMdd");
+
 	private double revenue;
 	private double totalRevenue;
 	
 	// to calculate revenue for each day
-	public void calculateRevenue(){
-		Calendar currentDate = Calendar.getInstance(); 
-		
+	@SuppressWarnings("deprecation")
+	public void printRevenueReport(){
+		 
+		String months[] = {"January", "February", "March", "April",
+                "May", "June", "July", "August", "September",
+                "October", "November", "December"};
 		Date today = new Date();
+	
+		
 		Date target = firstDayOfMonth(today);
 		
-		while(target.before(today)){
+		System.out.println("=======Revenue Report By Day (S$)======");
+		while(target.getMonth() == today.getMonth()){
+			totalRevenue=0;
+			System.out.printf("---------%s----------\n",dateFormatter.format(target));
+			
 			for(Cineplex c: cineplexList){
-				revenueDayMap.clear();
+				System.out.printf("%-15s : ", c.getCineplexName());
 				revenue= 0;
 				for (Booking b : bookingList){
-					if((b.getCineplexName() == c.getCineplexName()) & (b.getCurrentDate().equals(target))){
+					if((b.getCineplexName().equals(c.getCineplexName())) & (b.getCurrentDate().equals(target))){
+							revenue+=b.getPrice();
+					}
+					
+				}
+				
+				System.out.printf("%8.1f\n",revenue);
+				totalRevenue+=revenue;
+			}
+			System.out.printf("%-15s : %-8.1f\n", "TOTAL REVENUE", totalRevenue);
+			target=addDays(target,1);
+			}
+		
+		System.out.println();
+		int month =0;
+		target = firstDayOfYear(today);
+		System.out.println("=======Revenue Report By Month (S$)======");
+		while(month <= 11){
+			totalRevenue=0;
+			System.out.printf("---------%-10s---------\n", months[month]);
+			
+			for(Cineplex c: cineplexList){
+				revenue= 0;
+			System.out.printf("%-15s : ", c.getCineplexName());
+			
+			for (Booking b : bookingList){
+					if((b.getCineplexName().equals(c.getCineplexName())) &(b.getCurrentDate().getMonth()==month)){
 							revenue+=b.getPrice();
 					}
 				}
-				revenueDayMap.put(c.getCineplexName(), revenue);			
+			totalRevenue+=revenue;
+			System.out.printf("%-8.1f\n",revenue);
 			}
-			revenueMap.put(target, revenueDayMap);
-			addDays(target,1);
-		}
+			System.out.printf("%-15s : %-8.1f\n", "TOTAL REVENUE", totalRevenue);
+			month++;		
+			}
 	
-		for(Date key : revenueMap.keySet()){
-			totalRevenue = 0;
-			for(double r : revenueDayMap.values())
-				totalRevenue += r;
-			totalRevenueMap.put(key, totalRevenue);
-		}
+	
 }
 
-	//change Date to Calendar
-	public static Calendar DateToCalendar(Date date){ 
-		  Calendar cal = Calendar.getInstance();
-		  cal.setTime(date);
-		  return cal;
-		}
+
 	
 	//get first date of the current month
-	public static Date firstDayOfMonth(Date date) {
+	public Date firstDayOfMonth(Date date) {
 		   Calendar calendar = Calendar.getInstance();
 		   calendar.setTime(date);
 		   calendar.set(Calendar.DATE, 1);
 		   return calendar.getTime();
 		}
 	
+	public Date firstDayOfYear(Date date) {
+		   Calendar calendar = Calendar.getInstance();
+		   calendar.setTime(date);
+		   calendar.set(Calendar.MONTH, 0);
+		   calendar.set(Calendar.DATE, 1);
+		   return calendar.getTime();
+		}
+	
 	//increment date
-	public static Date addDays(Date date, int days)
+	public Date addDays(Date date, int days)
     {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         cal.add(Calendar.DATE, days); //minus number would decrement the days
         return cal.getTime();
-    }
-	
-	//print the report
-	public void printReport(){
-		for(Date key: revenueMap.keySet()){
-			System.out.format("%-30s", key);
-			for(String key1: revenueDayMap.keySet()){
-				System.out.format("%-10d", revenueDayMap.get(key1));
-				}
-			System.out.format("%-10d", totalRevenueMap.get(key));
-			System.out.println();
-			}
-		
-		}
-			
+    }	
 	}

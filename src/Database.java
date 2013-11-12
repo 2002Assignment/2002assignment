@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.*;
 
+@SuppressWarnings("serial")
 public class Database implements Serializable{
 	  
 	 public static void serialize(List list,String filename) {

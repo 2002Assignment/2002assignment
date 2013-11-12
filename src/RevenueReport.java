@@ -12,8 +12,7 @@ public abstract class RevenueReport {
 		this.bookingList = b;
 	}
 	
-	//public void readBookingHistory();
-	public abstract void calculateRevenue();
-	public abstract void printReport();
+	
+	public abstract void printRevenueReport();
 	
 }

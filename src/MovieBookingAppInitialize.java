@@ -15,20 +15,21 @@ public class MovieBookingAppInitialize {
 		File f4 = new File("Bookings.dat");
 		
 		
-		Database db=new Database();
+		
 		//initialize all database
 		Cinema[] cinemas0=new Cinema[3];
-		cinemas0[0]=new Cinema("NO1",true);
-		cinemas0[1]=new Cinema("NO2",false);
-		cinemas0[2]=new Cinema("NO3",true);
+		cinemas0[0]=new Cinema("FIR",true);
+		cinemas0[1]=new Cinema("SEC",false);
+		cinemas0[2]=new Cinema("THI",true);
 		Cinema[] cinemas1=new Cinema[3];
-		cinemas1[0]=new Cinema("NO1",true);
-		cinemas1[1]=new Cinema("NO2",false);
-		cinemas1[2]=new Cinema("NO3",true);
+		cinemas1[0]=new Cinema("FIR",true);
+		cinemas1[1]=new Cinema("SEC",false);
+		cinemas1[2]=new Cinema("THI",true);
 		Cinema[] cinemas2=new Cinema[3];
-		cinemas2[0]=new Cinema("NO1",true);
-		cinemas2[1]=new Cinema("NO2",false);
-		cinemas2[2]=new Cinema("NO3",true);
+		cinemas2[0]=new Cinema("FIR",true);
+		
+		cinemas2[1]=new Cinema("SEC",false);
+		cinemas2[2]=new Cinema("THI",true);
 		
 		ArrayList <Cineplex> cineplexes=new ArrayList<Cineplex>();
 		Cineplex cineplex0=new Cineplex("Jurong East",cinemas0);
@@ -39,50 +40,50 @@ public class MovieBookingAppInitialize {
 		cineplexes.add(cineplex1);
 		cineplexes.add(cineplex2);
 		
-		db.serialize(cineplexes, "Cineplexes.dat");
+		Database.serialize(cineplexes, "Cineplexes.dat");
         
 		//initialize movies database
 		SimpleDateFormat dateFormatterM=new SimpleDateFormat("yyyy-MM-dd");
 		
-		Date movieDateStart=new Date();
-		Date dateMovieOn=new Date();
+		
+		
 		//movie available
 		ArrayList <Movie> movies=new ArrayList<Movie>();
 		Movie movie0=new Movie("Avanta", dateFormatterM.parse("2013-11-01"),
-				"3D", "16G",150,"Preview");
+				"3D", "NC16",150,"Preview");
 		Movie movie1=new Movie("Geek", dateFormatterM.parse("2013-11-01"),
-				"2D", "13G",150,"Preview");
+				"2D", "PG13",150,"Preview");
 		Movie movie2=new Movie("The Notes", dateFormatterM.parse("2013-11-21"), 
-				"2D", "18G",120,"ComingSoon");
+				"2D", "M18",120,"ComingSoon");
 		Movie movie3=new Movie("Gravity", dateFormatterM.parse("2013-11-25"),
-				"3D", "16G",150,"ComingSoon");
+				"3D", "NC16",150,"ComingSoon");
 		Movie movie4=new Movie("Detactive Conan", dateFormatterM.parse("2013-11-31"),
 				"2D", "PG",120,"ComingSoon");
 		Movie movie5=new Movie("Cat and dog", dateFormatterM.parse("2013-11-19"),
 				"2D", "G",120,"ComingSoon");
-		Movie movie6=new Movie("Kongfu panda", dateFormatterM.parse("2013-11-03"),
+		Movie movie6=new Movie("Kongfu panda (*2D)", dateFormatterM.parse("2013-11-03"),
 				"2D", "PG",120,"NowShowing");
-		Movie movie7=new Movie("Kongfu panda", dateFormatterM.parse("2013-11-05"),
+		Movie movie7=new Movie("Kongfu panda (*3D)", dateFormatterM.parse("2013-11-05"),
 				"3D", "PG",120,"NowShowing");
 		Movie movie8=new Movie("Tian tai", dateFormatterM.parse("2013-10-27"),
-				"2D", "13G",120,"NowShowing");
+				"2D", "PG13",120,"NowShowing");
 		Movie movie9=new Movie("Ender's game", dateFormatterM.parse("2013-10-25"),
-				"2D", "18G",120,"NowShowing");
+				"2D", "M18",120,"NowShowing");
 		Movie movie10=new Movie("Taitanic", dateFormatterM.parse("2013-11-02"),
-				"3D", "13G",120,"NowShowing");
+				"3D", "PG13",120,"NowShowing");
 		Movie movie11=new Movie("Pie", dateFormatterM.parse("2013-10-31"),
 				"3D", "PG",120,"NowShowing");
 		//end of showing
 		Movie movie12=new Movie("Red2", dateFormatterM.parse("2013-01-01"), 
-				"2D", "16G",120,"EndOfShowing");
+				"2D", "NC16",120,"EndOfShowing");
 		Movie movie13=new Movie("Happy People", dateFormatterM.parse("2013-01-03"),
-				"2D", "13G",120,"EndOfShowing");
+				"2D", "PG13",120,"EndOfShowing");
 		Movie movie14=new Movie("Despicable Me2", dateFormatterM.parse("2013-01-04"),
 				"2D", "PG",120,"EndOfShowing");
-		Movie movie15=new Movie("Tai ji", dateFormatterM.parse("2013-01-03"),
-				"3D", "13G",120,"EndOfShowing");
+		Movie movie15=new Movie("Tai ji (*3D)", dateFormatterM.parse("2013-01-03"),
+				"3D", "PG13",120,"EndOfShowing");
 		Movie movie16=new Movie("Ice Man", dateFormatterM.parse("2013-01-02"),
-				"2D", "18G",120,"EndOfShowing");
+				"2D", "M18",120,"EndOfShowing");
 		Movie movie17=new Movie("Planes", dateFormatterM.parse("2013-01-01"), 
 				"3D", "PG",120,"EndOfShowing");
 	     
@@ -106,7 +107,7 @@ public class MovieBookingAppInitialize {
 		movies.add(movie17);
 		
 		
-		db.serialize(movies, "Movies.dat");
+		Database.serialize(movies, "Movies.dat");
 		
 ///////////////////////////
 		// initialize Sessions database
@@ -153,7 +154,7 @@ public class MovieBookingAppInitialize {
 			sessions.add(movie16_1);
 			sessions.add(movie17_1);
 	    }
-		db.serialize(sessions, "Sessions.dat");
+		Database.serialize(sessions, "Sessions.dat");
 
 	    //////////////////////////////
 	    //Now showing
@@ -274,13 +275,13 @@ public class MovieBookingAppInitialize {
 			sessions.add(movie11_5);
 	    }
 	    
-	    db.serialize(sessions, "Sessions.dat");
+	    Database.serialize(sessions, "Sessions.dat");
 		
 		// load lists from database
-		ArrayList <Cineplex> cineplexList=(ArrayList)db.deserialize("Cineplexes.dat");
-		ArrayList <Movie> movieList=(ArrayList)db.deserialize("Movies.dat");
-	    ArrayList <Session> sessionList=(ArrayList)db.deserialize("Sessions.dat");
-	    ArrayList <Booking> bookingList=(ArrayList)db.deserialize("Bookings.dat");
+		ArrayList <Cineplex> cineplexList=(ArrayList)Database.deserialize("Cineplexes.dat");
+		ArrayList <Movie> movieList=(ArrayList)Database.deserialize("Movies.dat");
+	    ArrayList <Session> sessionList=(ArrayList)Database.deserialize("Sessions.dat");
+	    ArrayList <Booking> bookingList=(ArrayList)Database.deserialize("Bookings.dat");
 	    
 		
 		//initialize bookings
@@ -296,36 +297,36 @@ public class MovieBookingAppInitialize {
         
         for (int i=1;i<sessionList.size()/4;i++){  
         	if ((Math.random()*10) > 3){
-        		Booking booking1=new Booking(1,1,sessionList.get(4*i) ,movieGoer1,1);
+        		Booking booking1=new Booking(" ",1,1,sessionList.get(4*i) ,movieGoer1,1);
     			bookings.add(booking1);
     			}
         	if ((Math.random()*10) > 3){
-        		Booking booking2=new Booking(1,2,sessionList.get(4*i-1) ,movieGoer2,1);
+        		Booking booking2=new Booking(" ",1,2,sessionList.get(4*i-1) ,movieGoer2,1);
     			bookings.add(booking2);
         	}
         	if ((Math.random()*10) > 3){
-        		Booking booking3=new Booking(1,3,sessionList.get(4*i-2) ,movieGoer3,1);
+        		Booking booking3=new Booking(" ",1,3,sessionList.get(4*i-2) ,movieGoer3,1);
     			bookings.add(booking3);
         	}
         	if ((Math.random()*10) > 3){
-        		Booking booking4=new Booking(1,4,sessionList.get(4*i-3) ,movieGoer4,1);
+        		Booking booking4=new Booking(" ",1,4,sessionList.get(4*i-3) ,movieGoer4,1);
     			bookings.add(booking4);
         	}
         	if ((Math.random()*10) > 3){
-        		Booking booking5=new Booking(1,5,sessionList.get(4*i-4) ,movieGoer5,2);
+        		Booking booking5=new Booking(" ",1,5,sessionList.get(4*i-4) ,movieGoer5,2);
     			bookings.add(booking5);
         	}
         	if ((Math.random()*10) > 3){
-        		Booking booking6=new Booking(2,1,sessionList.get(4*i-1) ,movieGoer6,3);
+        		Booking booking6=new Booking(" ",2,1,sessionList.get(4*i-1) ,movieGoer6,3);
     			bookings.add(booking6);
         	}
         	if ((Math.random()*10) > 3){
-        		Booking booking7=new Booking(2,2,sessionList.get(4*i-3) ,movieGoer7,3);
+        		Booking booking7=new Booking(" ",2,2,sessionList.get(4*i-3) ,movieGoer7,3);
     			bookings.add(booking7);
         	}
         }
         
-		db.serialize(bookings, "Bookings.dat");
+		Database.serialize(bookings, "Bookings.dat");
 		System.out.println("generated");
 	/*	File f1 = new File("Cineplexes.dat");
 		File f2 = new File("Movies.dat");

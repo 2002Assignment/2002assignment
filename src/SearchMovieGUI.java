@@ -10,16 +10,14 @@ import java.awt.event.*;
 
 
 
+@SuppressWarnings("serial")
 public class SearchMovieGUI extends  JFrame {
     
     
     public SearchMovieGUI() {
         initComponents();
     }
-    
-    
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">
+
     private void initComponents() {
         
         searchField = new  JTextField();
@@ -27,10 +25,7 @@ public class SearchMovieGUI extends  JFrame {
         showAllMovies = new  JButton();
         movieShowTimeTable = new  JScrollPane();
         
-        Database db=new Database();
-    	Date dt=new Date();
-        List sessionList=(List) db.deserialize("Sessions.dat");
-        
+        List sessionList=(List) Database.deserialize("Sessions.dat");
         
         setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE);
         
@@ -125,9 +120,8 @@ public class SearchMovieGUI extends  JFrame {
 
 
 	private void searchButtonActionPerformed( ActionEvent evt) {
-		Database db=new Database();
-        Date dt=new Date();
-        List sessionList=(List) db.deserialize("Sessions.dat");
+		
+        List sessionList=(List) Database.deserialize("Sessions.dat");
         System.out.println("The movie you searched:"+searchField.getText());
         
         ArrayList<String> tempListCol2=new ArrayList<String>();
@@ -174,12 +168,11 @@ public class SearchMovieGUI extends  JFrame {
     }                                        
                                                                      
     private void showAllMoviesActionPerformed( ActionEvent evt) {                                              
-                //print out all movie show times on windows
-                Database db=new Database();
-                Date dt=new Date();
+                //print out all movie show times on window
+                
                 int i=0;//for object array
                 SimpleDateFormat dateFormatter=new SimpleDateFormat("MM-dd HH:mm");
-                List sessionList=(List) db.deserialize("Sessions.dat");
+                List sessionList=(List) Database.deserialize("Sessions.dat");
                 //object initialize
                 Object[][] object=new Object[sessionList.size()][4];
                 for (int col=0;col<4;col++)
@@ -208,8 +201,7 @@ public class SearchMovieGUI extends  JFrame {
 /**
  * @param args the command line arguments
  */
- public void mainGUI() {
- //public static void main(String[] args){                
+ public void mainGUI() {          
                 /* Create and display the form */
                 java.awt.EventQueue.invokeLater(new Runnable() {
                     public void run() {

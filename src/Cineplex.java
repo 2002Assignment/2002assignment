@@ -1,12 +1,9 @@
 import java.io.Serializable;
-import java.util.Arrays;
-
-
+@SuppressWarnings("serial")
 public class Cineplex  implements Serializable {
 	
 	private String cineplexName;
 
-	
 
 	private Cinema[] cinema;
 	

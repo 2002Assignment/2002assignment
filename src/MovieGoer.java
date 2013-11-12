@@ -1,6 +1,7 @@
-import java.util.*;
+
 import java.io.*;
 
+@SuppressWarnings("serial")
 public class MovieGoer implements Serializable{
 	
 	private String name;

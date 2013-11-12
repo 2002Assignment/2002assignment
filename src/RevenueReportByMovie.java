@@ -2,9 +2,6 @@ import java.util.*;
 
 public class RevenueReportByMovie extends RevenueReport{
 
-	private HashMap<String, HashMap> revenueMap = new HashMap<String, HashMap>();
-	private HashMap<String, Double> revenueMovieMap = new HashMap<String, Double>();
-	private HashMap<String, Double> totalRevenueMap = new HashMap<String, Double>();
 	private double revenue;
 	private double totalRevenue;
 	
@@ -14,42 +11,39 @@ public class RevenueReportByMovie extends RevenueReport{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void calculateRevenue(){
-		
+	@SuppressWarnings("deprecation")
+	public void printRevenueReport(){
+		Date today = new Date();
+		System.out.printf("=======%s Revenue Report By Movie======\n", (1900+today.getYear()));
+
 			for (Movie m : movieList){
-				revenueMovieMap.clear();
-				for (Booking b : bookingList){
-					if(b.getMovieName() == m.getMovieName()){
-						for(Cineplex c : cineplexList){
-							if (c.getCineplexName() == b.getCineplexName()){
-								revenue+=b.getPrice();
-							}
-							revenueMovieMap.put(c.getCineplexName(),revenue);
-						}
-						revenueMap.put(b.getMovieName(), revenueMovieMap);
-					}
-				}
-			}
-			
-			for(String key : revenueMap.keySet()){
+				System.out.printf("------%-20s------\n", m.getMovieName());
 				totalRevenue = 0;
-				for(double r : revenueMovieMap.values())
-					totalRevenue += r;
-				totalRevenueMap.put(key, totalRevenue);
-		}
+				for(Cineplex c : cineplexList){
+					revenue=0;
+					
+				for (Booking b : bookingList){
+			
+					if(b.getMovieName().equals(m.getMovieName())&b.getCurrentDate().getYear()==today.getYear()){
+							
+							if (c.getCineplexName().equals(b.getCineplexName())){
+								
+								revenue+=b.getPrice();
+																
+							}
+							
+						}
+					}
+				System.out.printf("%-15s: %8.1f\n",c.getCineplexName(),revenue);
+				totalRevenue += revenue;
+				
+		
+				}
+				System.out.printf("TOTAL REVENUE  : %8.1f\n", totalRevenue);
+	
+			}
+			System.out.println();
 	}
 	
-	
-	public void printReport(){
-		for(String key: revenueMap.keySet()){
-			System.out.format("%-30s", key);
-			for(String key1: revenueMovieMap.keySet()){
-				System.out.format("%-10d", revenueMovieMap.get(key1));
-				}
-			System.out.format("%-10d", totalRevenueMap.get(key));
-			System.out.println();
-			}
-		
-		}
 
 }

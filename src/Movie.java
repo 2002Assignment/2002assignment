@@ -6,6 +6,7 @@ import java.util.GregorianCalendar;
 
 
 
+@SuppressWarnings("serial")
 public class Movie  implements Serializable {
 	private String movieName;
 	private Date movieDateOn;

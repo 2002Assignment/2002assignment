@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 import java.io.*;
 
+@SuppressWarnings("serial")
 public class Session implements Serializable {
 	
 	
@@ -57,6 +58,10 @@ public class Session implements Serializable {
 	
 	public boolean isSeatOccupied(int row,int column){
 		return seatLayout[row-1][column-1].isOccupied();
+	}
+	
+	public Date getDateMovieStart(){
+		return dateMovieStart;
 	}
 	
     public boolean assignSeat(int row, int column){
@@ -174,31 +179,46 @@ public class Session implements Serializable {
 		
 		if(movieType.equals("3D")){
 	        price += priceSetting.getPrice3D();
+	        //System.out.println("price ++ 3D price +++");
 		}
 		// check public holiday, weekends
-		if (this.checkHoliday())
+		if (checkHoliday(dateMovieStart)){
 		    price += priceSetting.getPriceHoliday();
+		
+		}
 		if(isNormal == 0)
-			price += priceSetting.getPricePlatium();
+			price += priceSetting.getPricePlatinum();
+		
 		return price;
 	}
+	
 	@SuppressWarnings("deprecation")
-	public boolean checkHoliday(){
+	public static boolean checkHoliday(Date dateMovieStart){
 		boolean isHoliday=false;
-		Database db=new Database();
-		ArrayList<Date> holidays=(ArrayList<Date>)db.deserialize("Holidays.dat");
-				for (Date d:holidays){
-		             if (dateMovieStart.equals(d))
-		            	 isHoliday=true;
-		                 break;
-		             }
+		ArrayList<Date> holidays=(ArrayList<Date>)Database.deserialize("Holidays.dat");
+		SimpleDateFormat dateFormatter=new SimpleDateFormat("yyyyMMdd");
+		String dateMovieStartstr=dateFormatter.format(dateMovieStart);		
+		for (Date d:holidays){
+			String dstr=dateFormatter.format(d);
+				
+            if (dateMovieStartstr.equals(dstr)){
+		       isHoliday=true;
+		      
+		       break;
+		     }
+		}
 				int year=dateMovieStart.getYear();
 				int month=dateMovieStart.getMonth();
 				int day=dateMovieStart.getDay();
 	    Calendar cal = new GregorianCalendar(year, month - 1, day);
+	   
 	    int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
-	    if (Calendar.SUNDAY == dayOfWeek || Calendar.SATURDAY == dayOfWeek)
+	   
+	    if ((Calendar.SUNDAY+5) == dayOfWeek || (Calendar.SATURDAY-2) == dayOfWeek){
+	    	
 	    	isHoliday=true;
+	    }
+	   
 		return isHoliday;
 	}
 
