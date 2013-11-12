@@ -24,4 +24,5 @@ public class Seat  implements Serializable{
 	public void unAssign(){
 		isOccupied=false;
 	}
+	
 }

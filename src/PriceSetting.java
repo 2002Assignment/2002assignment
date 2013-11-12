@@ -10,7 +10,7 @@ public class PriceSetting implements Serializable{
 	private double priceBasic;  //digital and normal cinema adult price
 	
 	private double price3D;
-	private double priceBlockbuster;
+	//private double priceBlockbuster;
 	private double pricePlatium;
 	private double priceHoliday;
 	private double discountSenior;
@@ -20,7 +20,7 @@ public class PriceSetting implements Serializable{
 	public PriceSetting(){
 		this.priceBasic = 10;
 		this.price3D = 2;
-		this.priceBlockbuster = 1.5;
+		//this.priceBlockbuster = 1.5;
 		this.pricePlatium = 5;
 		this.priceHoliday = 2;
 		this.discountSenior = 0.85;
@@ -33,7 +33,7 @@ public class PriceSetting implements Serializable{
 		
 		this.priceBasic = priceBasic;
 		this.price3D = price3d;
-		this.priceBlockbuster = priceBlockbuster;
+		//this.priceBlockbuster = priceBlockbuster;
 		this.pricePlatium = pricePlatium;
 		this.priceHoliday = priceHoliday;
 		this.discountSenior = discountSenior;
@@ -53,18 +53,18 @@ public class PriceSetting implements Serializable{
 	}
 	public void setPrice3D() {
 		double priceBasic;
-		System.out.println("Set the price difference btween 3D and digital movie: ");
+		System.out.println("Set the price difference btween 3D and 2D /digital movie: ");
 		Scanner sc= new Scanner(System.in);
 		this.price3D = sc.nextDouble();
 	}
-	public double getPriceBlockbuster() {
-		return priceBlockbuster;
-	}
-	public void setPriceBlockbuster() {
-		System.out.println("Set the price difference btween blockbuster and digital movie: ");
-		Scanner sc= new Scanner(System.in);
-		this.priceBlockbuster = sc.nextDouble();
-	}
+	//public double getPriceBlockbuster() {
+	//	return priceBlockbuster;
+	//}
+	//public void setPriceBlockbuster() {
+	//	System.out.println("Set the price difference btween blockbuster and digital movie: ");
+	//	Scanner sc= new Scanner(System.in);
+	//	this.priceBlockbuster = sc.nextDouble();
+	//}
 	public double getPricePlatium() {
 		return pricePlatium;
 	}
@@ -100,40 +100,40 @@ public class PriceSetting implements Serializable{
 	@Override
 	public String toString() {
 		return "PriceSetting [priceBasic=" + priceBasic + ", price3D="
-				+ price3D + ", priceBlockbuster=" + priceBlockbuster
+				+ price3D
 				+ ", pricePlatium=" + pricePlatium + ", priceHoliday="
 				+ priceHoliday + ", discountSenior=" + discountSenior
 				+ ", discountChild=" + discountChild + "]";
 	}
 	
-	public void setAllPrice(){
+	public PriceSetting setAllPrice(){
 		int choice;
 		do {
 		System.out.println("The current price setting : ");
 		System.out.println(this.toString());
 		System.out.println("->>Price Setting Menu:  Note besides basic price, others are incremental price based on basic price");
     	System.out.println("1. basic price");
-    	System.out.println("2. blockBuster+");
-    	System.out.println("3. platium+");
-    	System.out.println("4. holiday+");
-    	System.out.println("5. senior discount(eg : 0.8)");
+    	//System.out.println("2. blockBuster+");
+    	System.out.println("2. platium+");
+    	System.out.println("3. holiday+");
+    	System.out.println("4. senior discount(eg : 0.8)");
     	System.out.println("5. child discount(eg : 0.8)");
     	System.out.println("6. EXIT");
 		Scanner sc=new Scanner(System.in);
 		choice=sc.nextInt();
 		switch (choice){
 		case 1:this.setPriceBasic();break;
-		case 2:this.setPriceBlockbuster();break;
-		case 3:this.setPricePlatium();break;
-		case 4:this.setPriceHoliday();break;
-		case 5:this.setDiscountSenior();break;
-		case 6:this.setDiscountChild();break;
+		//case 2:this.setPriceBlockbuster();break;
+		case 2:this.setPricePlatium();break;
+		case 3:this.setPriceHoliday();break;
+		case 4:this.setDiscountSenior();break;
+		case 5:this.setDiscountChild();break;
 		default:System.out.println("End of setting price");
 		}
 		}while (choice<6);
 		
 		
-		
+		return this;
 		
 	}
 	

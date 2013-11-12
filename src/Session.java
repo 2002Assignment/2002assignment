@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -18,8 +19,8 @@ public class Session implements Serializable {
    
 	@Override
 	public String toString() {
-		return "Session [movie=" + movie + ", cineplex=" + cineplex
-				+ ", cinema=" + cinema + ", dateMovieStart=" + dateMovieStart
+		return "Session [movie=" + movie.getMovieName() + ", cineplex=" + cineplex.getCineplexName()
+				+ ", cinema=" + cinema.getCinemaCode() + ", dateMovieStart=" + dateMovieStart
 				+ ", seatLayout=" + Arrays.toString(seatLayout) + "]";
 	}
 	
@@ -55,23 +56,58 @@ public class Session implements Serializable {
 	}
 	
 	public boolean isSeatOccupied(int row,int column){
-		return seatLayout[row][column].isOccupied();
+		return seatLayout[row-1][column-1].isOccupied();
 	}
 	
-    public void assignSeat(int row, int column){
+    public boolean assignSeat(int row, int column){
 		
 		if(!isSeatOccupied(row,column)){
-		    seatLayout[row][column].assign();
+		    seatLayout[row-1][column-1].assign();
 		    System.out.println("Seat Assigned!");
+		    return true;
 		}
-		else
+		else{
 			System.out.println("Seat has already been occupied  to  another customer.");
-		
+			return false;
+		}
 		
 	}
+    
+    public void unAssignSeat(int row, int column){
+		seatLayout[row-1][column-1].unAssign();
+    }	
+		
+	
     public void printSessionLayout(){
-    	//..........
     	
+    	if (cinema.isCinemaNormal()){
+    		System.out.println("============SCREEN=============");
+	    	for (int row=0;row<10;row++){
+	    		for(int col=0;col<10;col++){
+	    			if(!seatLayout[row][col].isOccupied())
+	    				System.out.print("[ ]");
+	    			else
+	    				System.out.print("[X]");
+	    			if (col==5)
+	    				System.out.print("_");		
+	    		}
+	    	System.out.println();
+	    	}
+    	}
+    	else{
+    		System.out.println(" =====SCREEN=====");
+    		for (int row=0;row<5;row++){
+	    		for(int col=0;col<5;col++){
+	    			if(!seatLayout[row][col].isOccupied())
+	    				System.out.print("[ ]");
+	    			else
+	    				System.out.print("[X]");
+	    			if (col==2)
+	    				System.out.print("__");	
+	    		}
+    		System.out.println();
+    		}
+    	}
     }
     
     public void printInvoice(MovieGoer movieGoer, double price){
@@ -80,7 +116,7 @@ public class Session implements Serializable {
     	System.out.println("Movie name: "+getMovie());
     	System.out.println("Date and Time: "+dateMovieStart);
     	System.out.println("Price: "+price);
-    	System.out.println("Movie na: "+getMovie());
+    	System.out.println("Movie name: "+getMovie());
     }
     
     public Movie getMovie() {
@@ -136,16 +172,34 @@ public class Session implements Serializable {
 		String movieType = movie.getMovieType();
 		int isNormal = cinema.isCinemaNormal()? 1:0;
 		
-		switch(movieType){
-		case "3D": price += priceSetting.getPrice3D();
-			break;
-		case "Blockbuster": price += priceSetting.getPriceBlockbuster();
-			break;
+		if(movieType.equals("3D")){
+	        price += priceSetting.getPrice3D();
 		}
-		
+		// check public holiday, weekends
+		if (this.checkHoliday())
+		    price += priceSetting.getPriceHoliday();
 		if(isNormal == 0)
 			price += priceSetting.getPricePlatium();
 		return price;
+	}
+	@SuppressWarnings("deprecation")
+	public boolean checkHoliday(){
+		boolean isHoliday=false;
+		Database db=new Database();
+		ArrayList<Date> holidays=(ArrayList<Date>)db.deserialize("Holidays.dat");
+				for (Date d:holidays){
+		             if (dateMovieStart.equals(d))
+		            	 isHoliday=true;
+		                 break;
+		             }
+				int year=dateMovieStart.getYear();
+				int month=dateMovieStart.getMonth();
+				int day=dateMovieStart.getDay();
+	    Calendar cal = new GregorianCalendar(year, month - 1, day);
+	    int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+	    if (Calendar.SUNDAY == dayOfWeek || Calendar.SATURDAY == dayOfWeek)
+	    	isHoliday=true;
+		return isHoliday;
 	}
 
 }

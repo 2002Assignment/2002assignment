@@ -18,22 +18,23 @@ public class Admin {
 	    ArrayList <Session> sessionList=(ArrayList)db.deserialize("Sessions.dat");
 	    ArrayList <Booking> bookingList=(ArrayList)db.deserialize("Bookings.dat");
 	    ArrayList<Date> holidayList=(ArrayList)db.deserialize("Holidays.dat");
-	    PriceSetting priceSetting=(PriceSetting)db.deserialize("PriceSetting.dat").get(0);
+	    PriceSetting priceSetting=(PriceSetting)db.deserialize2("PriceSetting.dat");
 	    if(staff.inputPwd().equals(accessKey)){
 		do{
-			System.out.println("----Welcome to Admin System----");
-			System.out.println("1.add movie");
-			System.out.println("2.add movie session");
-			System.out.println("3.update movie");
-			System.out.println("4.set price");
-			System.out.println("5.set public holiday");
-			System.out.println("6.generate revenue report");
-			System.out.println("7.quit");
+			System.out.println("====Welcome to Admin System===");
+			System.out.println("1.add movie                  |");
+			System.out.println("2.add movie session          |");
+			System.out.println("3.update movie               |");
+			System.out.println("4.set price                  |");
+			System.out.println("5.set public holiday         |");
+			System.out.println("6.generate revenue report    |");
+			System.out.println("7.quit                       |");
+			System.out.println("==============================");
 			Scanner sc=new Scanner(System.in);
 			choice=sc.nextInt();
 			switch(choice){
 			case 1:
-				staff.addMovie();
+				staff.addMovie(movieList);
 				break;
 			case 2:
 				staff.addMovieSession();

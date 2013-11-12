@@ -14,25 +14,33 @@ public class Booking implements Serializable {
 	//constructor
 	public Booking(int seatRow, int seatColumn, Session session, MovieGoer movieGoer,int ticketType) {
 		Date currentDate=new Date();
-		SimpleDateFormat dateFormatter=new SimpleDateFormat("yyyymmddhhmm");
+		SimpleDateFormat dateFormatter=new SimpleDateFormat("yyyyMMddHHmm");
 		this.TID = session.getCinema().getCinemaCode() +dateFormatter.format(currentDate);
 		this.session = session;
 		this.movieGoer = movieGoer;
 		this.column=seatColumn;
 		this.row=seatRow;
 		this.price=session.getSessionTicketPrice()*this.getTicketTypeDiscount();
+		System.out.println("booking price : "+this.price);
 		this.currentDate=currentDate;
 	}
 	
 	public double getTicketTypeDiscount(){
-		double discount=1;
-		PriceSetting ps=new PriceSetting();
-		switch(ticketType){
-		case 1: discount =1; break;
-		case 2: discount=ps.getDiscountSenior();break;
-		case 3: discount=ps.getDiscountChild();break;
-		}
-		return discount;
+	
+		Database db=new Database();
+		PriceSetting ps=(PriceSetting)db.deserialize2("PriceSetting.dat");
+//		switch(this.ticketType){
+//		
+//		case 1: return 1; break;
+//		case 2: System.out.println("IN t t ");return ps.getDiscountSenior(); break;
+//		case 3: return ps.getDiscountChild(); break;
+//		}
+//		return 0;
+		if (ticketType==1)
+			return 1;
+		else if(ticketType==2)
+			return ps.getDiscountSenior();
+		else return ps.getDiscountChild();
 	}
 	public String getMovieName(){
 		return session.getMovie().getMovieName();
@@ -101,6 +109,10 @@ public class Booking implements Serializable {
 		System.out.println("Cinema:"+session.getCinema().getCinemaCode());
 		System.out.println("Start Time:"+session.getdateMovieStart());
 		System.out.println("Seat:"+"Row "+row+" Column "+column);
+		if (session.checkHoliday())
+		    System.out.println("Holiday/weekend price:");
+		System.out.println("TicketTypeDiscount:"+this.getTicketTypeDiscount());
+		
 		System.out.println("Price:"+price);
 		System.out.println("________________________");
 

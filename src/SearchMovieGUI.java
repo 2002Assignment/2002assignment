@@ -1,7 +1,11 @@
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.lang.String;
+
 import javax.swing.*;
+
 import java.awt.event.*;
 
 
@@ -50,17 +54,20 @@ public class SearchMovieGUI extends  JFrame {
                 showAllMoviesActionPerformed(evt);
             }
         });
-        Object[][] object=new Object[3][sessionList.size()];
-        for (int col=0;col<3;col++)
+      
+        
+        Object[][] object=new Object[sessionList.size()][4];
+        for (int col=0;col<4;col++)
+    
             for(int row=0;row<sessionList.size();row++)
             	object[row][col]=null;
        
         jTable1 = new  JTable(
          object,
         new String [] {
-        		 "Movie Name","Cineplex", "Show Time"
+        		 "Movie Name","Cineplex","Status", "Show Time"
        });
-        for (int col=0;col<3;col++)
+        for (int col=0;col<4;col++)
             for(int row=0;row<sessionList.size();row++)
                 switch(col){
                     case 0:
@@ -70,6 +77,9 @@ public class SearchMovieGUI extends  JFrame {
                         jTable1.setValueAt(null,row,col);
                         break;
                     case 2:
+                        jTable1.setValueAt(null,row,col);
+                        break;
+                    case 3:
                         jTable1.setValueAt(null,row,col);
                         break;
                         
@@ -119,57 +129,87 @@ public class SearchMovieGUI extends  JFrame {
         Date dt=new Date();
         List sessionList=(List) db.deserialize("Sessions.dat");
         System.out.println("The movie you searched:"+searchField.getText());
-        //clear table
-        for (int col=0;col<3;col++)
-            for(int row=0;row<sessionList.size();row++)
-                switch(col){
-                    case 0:
-                        jTable1.setValueAt(((Session)sessionList.get(row)).getMovie().getMovieName(), row, col);
-                        break;
-                    case 1:
-                        jTable1.setValueAt(((Session)sessionList.get(row)).getCineplex().getCineplexName(),row,col);
-                        break;
-                    case 2:
-                        jTable1.setValueAt(((Session)sessionList.get(row)).getdateMovieStart(),row,col);
-                        break;
-                        
-                }
-        //reconstruct table 
+        
+        ArrayList<String> tempListCol2=new ArrayList<String>();
+        ArrayList<String> tempListCol3=new ArrayList<String>();
+        ArrayList<String> tempListCol4=new ArrayList<String>();
         for(int i=0;i<jTable1.getRowCount();i++){
         	
-            if( searchField.getText().equals(jTable1.getValueAt(i, 0) ))
-                System.out.println(jTable1.getValueAt(i,1));
-            	
+            if( searchField.getText().equals(jTable1.getValueAt(i, 0) )){
+            	tempListCol2.add((String) jTable1.getValueAt(i,1));
+            	tempListCol3.add((String) jTable1.getValueAt(i,2));
+            	tempListCol4.add((String) jTable1.getValueAt(i,3));
+           
+            }
+        }
+        //reset    
+        for (int col=0;col<4;col++)
+            for(int row=0;row<sessionList.size();row++)
+                 jTable1.setValueAt(null, row, col);
+        jTable1.setValueAt(searchField.getText(),0,0);
+        int i=0;
+        for(String temp2:tempListCol2){
+        	
+        		jTable1.setValueAt(temp2, i++, 1);
+        	
+        }
+        i=0;
+        for(String temp3:tempListCol3){
+        	
+        		jTable1.setValueAt(temp3, i++, 2);
+        	
+        }
+        i=0;
+        for(String temp4:tempListCol4){
+        	
+        		jTable1.setValueAt(temp4, i++, 3);
+        	
+        }
+        
+        
             
-        }         
+                        
+                                   
+               
     }                                        
                                                                      
     private void showAllMoviesActionPerformed( ActionEvent evt) {                                              
                 //print out all movie show times on windows
                 Database db=new Database();
                 Date dt=new Date();
+                int i=0;//for object array
+                SimpleDateFormat dateFormatter=new SimpleDateFormat("MM-dd HH:mm");
                 List sessionList=(List) db.deserialize("Sessions.dat");
-                for (int col=0;col<3;col++)
+                //object initialize
+                Object[][] object=new Object[sessionList.size()][4];
+                for (int col=0;col<4;col++)
                     for(int row=0;row<sessionList.size();row++)
-                        switch(col){
-                            case 0:
-                                jTable1.setValueAt(((Session)sessionList.get(row)).getMovie().getMovieName(), row, col);
-                                break;
-                            case 1:
-                                jTable1.setValueAt(((Session)sessionList.get(row)).getCineplex().getCineplexName(),row,col);
-                                break;
-                            case 2:
-                                jTable1.setValueAt(((Session)sessionList.get(row)).getdateMovieStart(),row,col);
-                                break;
-                                
-                        }
-            }                                             
+                    	object[row][col]=null;
+                
+                for(int row=0;row<sessionList.size();row++){
+                	  
+                    	if (!((Session)sessionList.get(row)).getMovie().getMovieStatus().equals("EndOfShowing")){
+	                        
+                    		object[i][0]=((Session)sessionList.get(row)).getMovie().getMovieName();                        
+	                       	object[i][1]=((Session)sessionList.get(row)).getCineplex().getCineplexName();	                          
+	                     	object[i][2]=((Session)sessionList.get(row)).getMovie().getMovieStatus();                              
+	                      	object[i][3]=dateFormatter.format(((Session)sessionList.get(row)).getdateMovieStart());                         
+	                        i++;
+                    	
+                	}
+                	
+                } 
+                for (int col=0;col<4;col++)
+                    for(int row=0;row<object.length;row++)
+                    	jTable1.setValueAt(object[row][col],row,col);
+            }          
+    
                                                                      
 /**
  * @param args the command line arguments
  */
- public static void main(String args[]) {
-                
+ public void mainGUI() {
+ //public static void main(String[] args){                
                 /* Create and display the form */
                 java.awt.EventQueue.invokeLater(new Runnable() {
                     public void run() {

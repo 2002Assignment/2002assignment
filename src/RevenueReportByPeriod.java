@@ -84,4 +84,3 @@ public class RevenueReportByPeriod extends RevenueReport{
 		}
 			
 	}
-

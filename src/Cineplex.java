@@ -47,7 +47,9 @@ public class Cineplex  implements Serializable {
 	}
 	@Override
 	public String toString() {
+		String cinemastr;
+		cinemastr=cinema[0].getCinemaCode()+cinema[1].getCinemaCode()+cinema[2].getCinemaCode();
 		return "Cineplex [cineplexName=" + cineplexName + ", cinema="
-				+ Arrays.toString(cinema) + "]";
+				+ cinemastr + "]";
 	}
 }

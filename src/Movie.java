@@ -46,6 +46,7 @@ public class Movie  implements Serializable {
 		return movieName;
 	}
 	public void setMovieName(String movieName) {
+		//System.out.println(this.movieName + movieName);
 		this.movieName = movieName;
 	}
 	public Date getMovieDateOn() {
